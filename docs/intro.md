@@ -1,47 +1,43 @@
----
-sidebar_position: 1
----
+# DRM Entitlement Service
 
-# Tutorial Intro
+## Project Overview
+This is a Node.js-based entitlement service that acts as a proxy between video players and Axinom's DRM licensing server. It handles Widevine DRM license requests, manages user authentication, and implements rate limiting for device access control.
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## Key Features
+- **DRM License Acquisition**: Handles Widevine DRM license requests and communicates with Axinom's DRM server
+- **JWT Authentication**: Implements JSON Web Token (JWT) based authentication for secure access
+- **Rate Limiting**: Redis-based rate limiting system to control license requests per device
+- **Performance Monitoring**: Built-in middleware to track execution time and resource usage
+- **CORS Support**: Configured for cross-origin resource sharing to work with web players
+- **Error Handling**: Comprehensive error handling and logging system
 
-## Getting Started
+## Architecture Components
+1. **Frontend Player**
+   - HTML5 video player with Shaka Player integration
+   - Handles DRM license acquisition workflow
+   - Supports Widevine DRM
 
-Get started by **creating a new site**.
+2. **Backend Services**
+   - Express.js server with RESTful API endpoints
+   - Redis for rate limiting and caching
+   - JWT-based authentication middleware
+   - Performance monitoring middleware
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+3. **External Integration**
+   - Axinom DRM license server integration
+   - Custom JWT signing for Axinom communication
 
-### What you'll need
+## Technology Stack
+- Node.js & Express.js
+- Redis
+- Shaka Player (Client-side)
+- JWT for authentication
+- Axios for HTTP requests
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+## Usage
+The service primarily handles DRM license requests through the `/api/acquire-license` endpoint, which:
+1. Validates the access token
+2. Processes the license request
+3. Communicates with Axinom's DRM server
+4. Enforces rate limiting per device
+5. Returns the license response to the video player
